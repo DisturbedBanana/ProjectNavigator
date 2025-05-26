@@ -13,6 +13,14 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <shlobj.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+#endif
+
+// Add at file scope (top of file, after includes):
+#ifdef _WIN32
+static bool g_draggingWindow = false;
+static ImVec2 g_clickOffset;
 #endif
 
 struct ProjectInfo {
@@ -356,6 +364,83 @@ void ShowSettingsWindow(UISettings& settings, bool* p_open) {
     ImGui::End();
 }
 
+void ImGuiCustomTitleBar(GLFWwindow* window, bool* p_open) {
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, 36));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 4));
+    ImGui::Begin("##CustomTitleBar", nullptr,
+        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
+
+    ImVec2 barMin = ImGui::GetWindowPos();
+    ImVec2 barMax = ImVec2(barMin.x + ImGui::GetWindowWidth(), barMin.y + ImGui::GetWindowHeight());
+    float btnSize = 24.0f;
+    float btnPad = 8.0f;
+    ImVec2 dragMin = barMin;
+    ImVec2 dragMax = ImVec2(barMax.x - btnPad - btnSize * 2 - 8, barMax.y);
+    auto inDragRect = [&](float x, float y) {
+        return x >= dragMin.x && x < dragMax.x && y >= dragMin.y && y < dragMax.y;
+    };
+
+    // App title
+    ImGui::SetCursorPosX(16);
+    ImGui::SetCursorPosY(8);
+    ImGui::PushFont(ImGui::GetFont());
+    ImGui::Text("Project Navigator");
+    ImGui::PopFont();
+
+    // Minimize and Close buttons (right side)
+    ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() - btnPad - btnSize * 2, 6));
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0,0,0,0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f,0.2f,0.2f,0.5f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.3f,0.3f,0.3f,0.7f));
+    if (ImGui::Button("\xef\x81\xb2##minimize", ImVec2(btnSize, btnSize))) {
+#ifdef _WIN32
+        HWND hwnd = glfwGetWin32Window(window);
+        ShowWindow(hwnd, SW_MINIMIZE);
+#endif
+    }
+    bool hoveringButtons = ImGui::IsItemHovered();
+    ImGui::SameLine(0, 4);
+    ImGui::SetCursorPosY(6);
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f,0.2f,0.2f,1.0f));
+    if (ImGui::Button("\xef\x80\x8d##close", ImVec2(btnSize, btnSize))) {
+        if (p_open) *p_open = false;
+#ifdef _WIN32
+        HWND hwnd = glfwGetWin32Window(window);
+        PostMessage(hwnd, WM_CLOSE, 0, 0);
+#endif
+    }
+    hoveringButtons = hoveringButtons || ImGui::IsItemHovered();
+    ImGui::PopStyleColor();
+    ImGui::PopStyleColor(3);
+    ImGui::End();
+    ImGui::PopStyleVar(3);
+
+#ifdef _WIN32
+    ImGuiIO& io = ImGui::GetIO();
+    HWND hwnd = glfwGetWin32Window(window);
+    POINT mouse;
+    GetCursorPos(&mouse);
+    if (!hoveringButtons && io.MouseClicked[0] && inDragRect(mouse.x, mouse.y)) {
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+        g_clickOffset.x = mouse.x - rect.left;
+        g_clickOffset.y = mouse.y - rect.top;
+        g_draggingWindow = true;
+    }
+    if (g_draggingWindow && io.MouseDown[0]) {
+        GetCursorPos(&mouse);
+        SetWindowPos(hwnd, nullptr, mouse.x - (int)g_clickOffset.x, mouse.y - (int)g_clickOffset.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+    }
+    if (g_draggingWindow && !io.MouseDown[0]) {
+        g_draggingWindow = false;
+    }
+#endif
+}
+
 #ifdef _WIN32
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 #else
@@ -363,9 +448,27 @@ int main()
 #endif
 {
     glfwInit();
+#ifdef _WIN32
+    // Remove the GLFW_DECORATED hint to allow window resizing
+    // glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+#endif
     GLFWwindow* window = glfwCreateWindow(1280, 720, "Project Navigator", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    // Center the window on screen
+#ifdef _WIN32
+    HWND hwnd = glfwGetWin32Window(window);
+    RECT rect;
+    GetWindowRect(hwnd, &rect);
+    int winWidth = rect.right - rect.left;
+    int winHeight = rect.bottom - rect.top;
+    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+    int x = (screenWidth - winWidth) / 2;
+    int y = (screenHeight - winHeight) / 2;
+    SetWindowPos(hwnd, nullptr, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+#endif
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -376,10 +479,6 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 130");
 
-    // Load settings
-    UISettings settings = LoadSettings();
-    ApplySettings(settings);
-
     // Load the last used directory
     std::string lastDirectory = LoadLastDirectory();
     static char dirBuffer[512];
@@ -389,47 +488,33 @@ int main()
     static std::vector<ProjectInfo> projects;
     static bool scanned = false;
     static std::string scanError;
-    static bool showSettings = false;
+    static bool windowOpen = true;
 
-    // Perform initial scan if enabled
-    if (settings.autoScanOnStart) {
-        try {
-            projects = ScanForProjects(dirBuffer);
-            scanError.clear();
-            scanned = true;
-        } catch (const std::exception& e) {
-            scanError = e.what();
-            scanned = false;
-        }
+    // Perform initial scan
+    try {
+        projects = ScanForProjects(dirBuffer);
+        scanError.clear();
+        scanned = true;
+    } catch (const std::exception& e) {
+        scanError = e.what();
+        scanned = false;
     }
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window) && windowOpen) {
         glfwPollEvents();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        // Custom title bar
+        ImGuiCustomTitleBar(window, &windowOpen);
+
         // Modern dockspace layout
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
 
-        // Top toolbar
-        ImGui::SetNextWindowPos(ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, 60));
-        ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings);
-        ImGui::PushFont(ImGui::GetFont());
-        ImGui::Text("Project Navigator");
-        ImGui::SameLine(ImGui::GetWindowWidth() - 120);
-        if (ImGui::Button("Settings", ImVec2(100, 0))) {
-            showSettings = !showSettings;
-        }
-        ImGui::PopFont();
-        ImGui::End();
-
         // Main content window
-        ImGui::SetNextWindowPos(ImVec2(0, 60));
-        ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - 60));
-        ImGui::Begin("ProjectNavigatorMain", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+        ImGui::Begin("ProjectNavigatorMain", nullptr, ImGuiWindowFlags_NoCollapse);
 
         ImGui::Text("Enter the root directory to scan for Unity and Unreal projects:");
         ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x - 120);
@@ -457,13 +542,13 @@ int main()
         // Responsive panels for Unity and Unreal projects
         float panelWidth = (ImGui::GetContentRegionAvail().x - 24) * 0.5f;
         ImGui::BeginChild("UnityPanel", ImVec2(panelWidth, 0), true, ImGuiWindowFlags_None);
-        ImGui::TextColored(settings.unityProjectColor, "Unity Projects");
+        ImGui::TextColored(ImVec4(0.2f, 0.4f, 0.8f, 1.0f), "Unity Projects");
         ImGui::Separator();
         bool hasUnityProjects = false;
         for (const auto& proj : projects) {
             if (proj.type == "Unity") {
                 hasUnityProjects = true;
-                ImGui::PushStyleColor(ImGuiCol_Text, settings.unityProjectColor);
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.2f, 0.4f, 0.8f, 1.0f));
                 if (ImGui::Selectable(proj.name.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick, ImVec2(panelWidth - 80, 0))) {
                     if (ImGui::IsMouseDoubleClicked(0)) {
 #ifdef _WIN32
@@ -489,13 +574,13 @@ int main()
         ImGui::EndChild();
         ImGui::SameLine(0, 24);
         ImGui::BeginChild("UnrealPanel", ImVec2(panelWidth, 0), true, ImGuiWindowFlags_None);
-        ImGui::TextColored(settings.unrealProjectColor, "Unreal Projects");
+        ImGui::TextColored(ImVec4(0.8f, 0.2f, 0.2f, 1.0f), "Unreal Projects");
         ImGui::Separator();
         bool hasUnrealProjects = false;
         for (const auto& proj : projects) {
             if (proj.type == "Unreal") {
                 hasUnrealProjects = true;
-                ImGui::PushStyleColor(ImGuiCol_Text, settings.unrealProjectColor);
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
                 if (ImGui::Selectable(proj.name.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick, ImVec2(panelWidth - 80, 0))) {
                     if (ImGui::IsMouseDoubleClicked(0)) {
 #ifdef _WIN32
@@ -522,16 +607,11 @@ int main()
 
         ImGui::End(); // ProjectNavigatorMain
 
-        // Show settings window if enabled
-        if (showSettings) {
-            ShowSettingsWindow(settings, &showSettings);
-        }
-
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(settings.windowBgColor.x, settings.windowBgColor.y, settings.windowBgColor.z, settings.windowBgColor.w);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
