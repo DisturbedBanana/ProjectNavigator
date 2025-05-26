@@ -1,0 +1,10 @@
+^C:\USERS\USER\DOWNLOADS\PROJECTNAVIGATOR\BUILD\CMAKEFILES\3010D9E34F539120D27A1C825A6768E1\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/user/Downloads/ProjectNavigator -BC:/Users/user/Downloads/ProjectNavigator/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/user/Downloads/ProjectNavigator/build/ProjectNavigator.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,12 @@
+C:/Users/user/Downloads/ProjectNavigator/build/CMakeFiles/imgui.dir
+C:/Users/user/Downloads/ProjectNavigator/build/CMakeFiles/ProjectNavigator.dir
+C:/Users/user/Downloads/ProjectNavigator/build/CMakeFiles/INSTALL.dir
+C:/Users/user/Downloads/ProjectNavigator/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/user/Downloads/ProjectNavigator/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/CMakeFiles/uninstall.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/CMakeFiles/INSTALL.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/CMakeFiles/ALL_BUILD.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/src/CMakeFiles/glfw.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/src/CMakeFiles/update_mappings.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/src/CMakeFiles/INSTALL.dir
+C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/docs/CMakeFiles/INSTALL.dir
