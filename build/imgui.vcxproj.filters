@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\backends\imgui_impl_glfw.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\backends\imgui_impl_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\backends\imgui_impl_opengl3.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\imgui.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\imgui_demo.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\imgui_draw.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\imgui_tables.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\imgui_tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\user\Downloads\ProjectNavigator\libs\imgui\imgui_widgets.cpp">
+    <ClCompile Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\user\Downloads\ProjectNavigator\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\user\Documents\GitHub\ProjectNavigator\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{2DAE1644-F20B-3527-901B-31C15BE44F2C}</UniqueIdentifier>
+      <UniqueIdentifier>{2FE96625-4DEA-3769-8E9A-6B4A6D447AFC}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

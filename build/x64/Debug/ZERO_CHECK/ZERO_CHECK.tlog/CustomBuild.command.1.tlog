@@ -1,6 +1,6 @@
-^C:\USERS\USER\DOWNLOADS\PROJECTNAVIGATOR\BUILD\CMAKEFILES\3010D9E34F539120D27A1C825A6768E1\GENERATE.STAMP.RULE
+^C:\USERS\USER\DOCUMENTS\GITHUB\PROJECTNAVIGATOR\BUILD\CMAKEFILES\2C384C51D7127BAFCC30951F65CABE1C\GENERATE.STAMP.RULE
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/user/Downloads/ProjectNavigator -BC:/Users/user/Downloads/ProjectNavigator/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/user/Downloads/ProjectNavigator/build/ProjectNavigator.sln
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/user/Documents/GitHub/ProjectNavigator -BC:/Users/user/Documents/GitHub/ProjectNavigator/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/user/Documents/GitHub/ProjectNavigator/build/ProjectNavigator.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

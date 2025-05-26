@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\user\Downloads\ProjectNavigator\build\CMakeFiles\7423887a4cbd7e0d6a02a716cb8ca7fb\update_mappings.rule">
+    <CustomBuild Include="C:\Users\user\Documents\GitHub\ProjectNavigator\build\CMakeFiles\12e36e3ff3c46388897c17e335cabc62\update_mappings.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\user\Downloads\ProjectNavigator\libs\glfw\src\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\glfw\src\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\user\Downloads\ProjectNavigator\libs\glfw\src\mappings.h.in">
+    <None Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\glfw\src\mappings.h.in">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="C:\Users\user\Downloads\ProjectNavigator\libs\glfw\CMake\GenerateMappings.cmake" />
-    <None Include="C:\Users\user\Downloads\ProjectNavigator\build\libs\glfw\src\CMakeFiles\update_mappings" />
+    <None Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\glfw\CMake\GenerateMappings.cmake" />
+    <None Include="C:\Users\user\Documents\GitHub\ProjectNavigator\build\libs\glfw\src\CMakeFiles\update_mappings" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{C3372F82-3641-3221-B69E-CB7D129C71FC}</UniqueIdentifier>
+      <UniqueIdentifier>{1C95B25F-7C08-303C-9D16-704CDB4C76C0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{559C9B0F-EDD8-370C-85A8-398CA76880C0}</UniqueIdentifier>
+      <UniqueIdentifier>{7AC8E176-7C22-38A7-A44E-A1A033F13808}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

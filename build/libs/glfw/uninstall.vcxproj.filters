@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\user\Downloads\ProjectNavigator\build\CMakeFiles\45a9f307ce6238d833a74163c535bad6\uninstall.rule">
+    <CustomBuild Include="C:\Users\user\Documents\GitHub\ProjectNavigator\build\CMakeFiles\0688b3f38863e6c65f00ed044c757ccc\uninstall.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\user\Downloads\ProjectNavigator\libs\glfw\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\user\Documents\GitHub\ProjectNavigator\libs\glfw\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\user\Downloads\ProjectNavigator\build\libs\glfw\CMakeFiles\uninstall" />
+    <None Include="C:\Users\user\Documents\GitHub\ProjectNavigator\build\libs\glfw\CMakeFiles\uninstall" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{C3372F82-3641-3221-B69E-CB7D129C71FC}</UniqueIdentifier>
+      <UniqueIdentifier>{1C95B25F-7C08-303C-9D16-704CDB4C76C0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

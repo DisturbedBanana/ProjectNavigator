@@ -23,7 +23,7 @@ target_include_directories(imgui PUBLIC
 )
 
 # Your executable
-add_executable(ProjectNavigator src/main.cpp)
+add_executable(ProjectNavigator WIN32 src/main.cpp)
 
 # Include directories for your executable
 target_include_directories(ProjectNavigator PRIVATE 

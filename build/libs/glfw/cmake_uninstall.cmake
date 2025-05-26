@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/install_manifest.txt\"")
+if (NOT EXISTS "C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/install_manifest.txt\"")
 endif()
 
-file(READ "C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/install_manifest.txt" files)
+file(READ "C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

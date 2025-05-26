@@ -1,10 +1,10 @@
 {
 	"InstallScripts" : 
 	[
-		"C:/Users/user/Downloads/ProjectNavigator/build/cmake_install.cmake",
-		"C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/cmake_install.cmake",
-		"C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/src/cmake_install.cmake",
-		"C:/Users/user/Downloads/ProjectNavigator/build/libs/glfw/docs/cmake_install.cmake"
+		"C:/Users/user/Documents/GitHub/ProjectNavigator/build/cmake_install.cmake",
+		"C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/cmake_install.cmake",
+		"C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/src/cmake_install.cmake",
+		"C:/Users/user/Documents/GitHub/ProjectNavigator/build/libs/glfw/docs/cmake_install.cmake"
 	],
 	"Parallel" : false
 }
